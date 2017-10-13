@@ -1,0 +1,100 @@
+<%- include('top') %>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+          <% if (user.profile.jobtitle == 'admin' || user.profile.jobtitle == 'director') { %>
+          <a href="adduser" type="button" class="btn btn-round btn-success" style="width:100%; margin-bottom: 30px">Новый сотрудник</a>
+          <% } %>
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Сотрудники</h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Начало имени...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Найти!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_content">
+                   <div id="user-container" class="row">
+                      <div  class="col-md-12 col-sm-12 col-xs-12 text-center">
+
+                      </div>
+
+                      <div class="clearfix"></div>
+
+
+
+                        <% for(var i = 0; i < users.length; i++) {%>
+                      <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
+                        <div class="well profile_view">
+                          <div class="col-sm-12">
+                            <h4 class="brief"><i><%= users[i].profile.jobtitle %></i></h4>
+                            <div class="left col-xs-7">
+                              <h2><%= users[i].profile.fname %> <%= users[i].profile.sname %></h2>
+
+                              <ul class="list-unstyled">
+                                <li><i class="fa fa-building"></i> Email : <%= users[i].local.email %> </li>
+                                <li><i class="fa fa-phone"></i> Телефон #: <%= users[i].local.phone %></li>
+                                <li><i class="fa fa-skype"></i> skype: <%= users[i].local.skype %></li>
+                                <li><i class="fa fa-viber"></i> viber: <%= users[i].local.viber %></li>
+                              </ul>
+                            </div>
+                            <div class="right col-xs-5 text-center">
+                              <img src="images/user.png" alt="" class="img-circle img-responsive">
+                            </div>
+                          </div>
+                          <div class="col-xs-12 bottom text-center">
+                            <button type="button" class="btn btn-success btn-xs"> <i class="fa fa-user">
+                                </i> <i class="fa fa-comments-o"></i> </button>
+                                        <% if (user.profile.jobtitle == 'admin' || user.profile.jobtitle == 'director') { %>
+                              <a href="edituser?id=<%= users[i].id %>" class="btn btn-primary btn-xs"> <i class="fa fa-edit">
+                                </i></a>
+  <a href="deleteuser?id=<%= users[i].id %>" class="btn btn-danger btn-xs"> <i class="fa fa-trash">
+                                </i></a>
+
+                                <% } %>
+                          </div>
+                        </div>
+                      </div>
+                      <% } %>
+
+
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+
+<%- include('footer')%>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#preloader').fadeOut(function(){
+  $('footer').css({"background":"white",
+   "color":"#333"})
+  $('footer').fadeIn(); 
+  $('.body').fadeIn()
+  $(window).trigger('resize');
+})
+
+
+  })
+</script>

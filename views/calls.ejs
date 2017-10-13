@@ -1,0 +1,353 @@
+<%- include('top') %>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3>Звонки</h3>
+                    </div>
+
+
+                </div>
+                <div>
+
+                    <div id="good" class="alert alert-success alert-dismissible fade in" role="alert" style="display: none">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                        <strong>Изменения внесены!</strong>
+                    </div></div>
+                <div id="art-no-method" class="alert art-acti alert-warning alert-dismissible fade in" role="alert" style="display: none">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>Не выбрано действие!</strong>
+                </div></div>
+            <style type="text/css">
+                .popsel {
+                    display: none;
+                }
+            </style>
+
+
+
+            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+            </div>
+
+
+            <div id="bbaction" style="float: left; display: none;width: 100%; padding: 20px">
+                <div class="row">
+
+                    <div class="col-md-9 col-sm-9 col-xs-9" >
+                        <div class="form-group">
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <select id="sel-bulk-action" class="form-control" name="status">
+                                    <option disabled selected>Действие</option>
+                                    <option value="delete">Удалить</option>
+                                    <option disabled="true">Изменить статут</option>
+                                    <option disabled="true">Изменить управляющего</option>
+                                    <option disabled="true">Изменить источник</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                <button id="lion" class="btn btn-warning" style="float: right">Подтвердить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix">
+
+
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+
+                        <div class="x_content">
+                            <p class="text-muted font-13 m-b-30">
+                            </p>
+
+
+                            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%" >
+
+                                <thead>
+                                <tr>
+                                    <th style="max-width: 30px;"></th>
+                                    <th><input type="checkbox" id="check-all"></th>
+                                    <th>Карта</th>
+                                    <th>Дата</th>
+                                    <th>Запись</th>
+                                    <th>Направлено в службу</th>
+                                    <th>Статус</th>
+
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                 <% for(var i = 0; i < calls.length; i++) {%>
+                                <tr>
+                                                                    <td style="max-width: 30px;"></td>
+                                    <td ><input type="checkbox" id="<%= %>"></td>
+                                    <td><a href="http://maps.google.com/maps?q=<%= calls[i].loc[0]  %>,<%= calls[i].loc[1]  %>"><i class="fa fa-map-marker" aria-hidden="true"></i></a></td>
+
+                                    <td></td>
+
+                                    <td>
+                                    <% if (calls[i].audioSrc) {   %>
+                                        <audio controls >
+                                            <source src="<%= calls[i].audioSrc  %>" type="audio/mpeg">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                    <% } %>
+                                    </td><td><%= calls[i].type  %></td>
+                                                      <td class="status" data-load="<%=  %>">
+                          <select class="selectstatus" data-id="<%=  %>">
+                          <option value="Ожидает">Ожидает</option>
+                          <option value="Успех">Успех</option>
+                          <option value="Неуспех">Неуспех</option>
+                          <option value="Непонятно">Непонятно</option></select>
+                      </td></tr> <% } %>
+
+                                </tbody>
+                                <style>tbody tr td {
+                                        text-align: center;
+                                    }
+                                    tbody tr td audio {
+                                        display: inline-block;
+                                    }
+                                </style>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="pull-right">
+        by  CityLife 
+    </div>
+    <div class="clearfix"></div>
+</footer>
+
+</div>
+</div>
+
+<script src="/vendors/jquery/dist/jquery.min.js"></script>
+<script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/vendors/fastclick/lib/fastclick.js"></script>
+<script src="/vendors/nprogress/nprogress.js"></script>
+<script src="/vendors/iCheck/icheck.min.js"></script>
+<script src="/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+<script src="/vendors/jszip/dist/jszip.min.js"></script>
+<script src="/vendors/pdfmake/build/pdfmake.min.js"></script>
+<script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
+<script src="/build/js/custom.js"></script>
+
+
+<script type="text/javascript" src="/vendors/moment/moment.js"></script>
+<script type="text/javascript" src="../vendors/moment/locale/ru.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<style type="text/css">
+
+    .ranges{border: 3px solid #424954; padding: 10px; } .dataTables_filter {
+                                                            width: auto !important;
+                                                        }</style>
+
+
+
+<script type="text/javascript">
+    var allChecked;
+    var method;
+
+    var qwe = function() {
+        $('.totime').each(function() {
+            if ($(this)) {
+                $(this).text();
+            }
+        })
+    }
+
+    var countChecked = function() {
+        allChecked = $("input:checked");
+        if (allChecked.length > 0) {
+            $('#bbaction').show({});
+        }
+    };
+
+
+    $(document).ready(function() {
+init_DataTables();
+        $(".selectstatus").each(function(){
+            $(this).val($(this).parent().attr('data-load'))
+            console.log($(this).val())
+        })
+
+        $('.selectstatus').change(function(event) {
+            $.post('/update/orders?method=chsts', {"newstatus": $(this).val(), "ids[]": $(this).attr('data-id')}).done(function(){
+                window.location.reload();
+            })
+        });
+
+
+
+        $(".selectrespId").change(function(event) {
+            var id = $(this).attr('data-id');
+            var data = {} ;
+            data['ids[]'] = id;
+            data['newId'] = $(this).val();
+            $.post('/update/orders?method=chresp', data).done(function(){ $('#good').slideDown() });
+
+        })
+
+
+
+        $.getJSON('status.json', function(json) {
+            json.forEach(function(cv,i,a){
+                $('#status').append($("<option></option>")
+                    .attr("value",json[i].id)
+                    .text(json[i].name));
+
+            })
+        });
+
+
+        $('#sel-bulk-action').change(function(event) {
+            $('.art-acti').hide();
+            method = $('#sel-bulk-action').val();
+        });
+        qwe();
+
+        // ACTION BUTTON
+        $("#lion").click(function(e) {
+            e.preventDefault();
+
+
+
+            if (!method) {
+                $('#art-no-method').slideDown();
+                return
+            }
+
+
+
+            if (allChecked.length <= 0) return
+            if (!$('#sel-bulk-action').val()) return
+
+
+            var data = [];
+
+            for(var i=0; i < allChecked.length; i++) {
+                if (allChecked[i].id != "check-all") {
+                    data.push(allChecked[i].id);
+                }
+            }
+
+
+            $.ajax({
+                url: 'update/orders?method=changem' ,
+                type: 'post',
+                dataType: 'json',
+                data: {'ids': data }
+            }).done(function(response){
+                console.log(response);
+            })
+
+        })
+
+
+        $('#check-all').click(function(event) {
+            if(this.checked) {
+                $(':checkbox').each(function() {
+                    this.checked = true;
+                    $('#bbaction').show()
+                });
+            }
+            else {
+                $(':checkbox').each(function() {
+                    this.checked = false;
+                    $('#bbaction').hide()
+                });
+            }
+        });
+
+        $('select[name="datatable-responsive_length"]').change(function() {
+
+            console.log($(this).val());
+            qwe();
+
+
+        })
+
+        countChecked();
+        $( "input[type=checkbox]" ).on( "click", countChecked );
+
+
+        $(function() {
+
+            var start = moment().subtract(29, 'days');
+            var end = moment()
+
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                console.log(start)
+            }
+
+            $('#reportrange').daterangepicker({
+                startDate: start,
+                endDate: end,
+                ranges: {
+                    'Сегодня': [moment(), moment()],
+                    'Вчера': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Последние 7 Дней': [moment().subtract(6, 'days'), moment()],
+                    'Последние 30 Дней': [moment().subtract(29, 'days'), moment()],
+                    'Этот Месяц': [moment().startOf('month'), moment().endOf('month')],
+                    'Прошлый Месяц': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+
+            cb(start, end);
+
+            $('.applyBtn').text("Применить");
+            $('.cancelBtn').text("Отменить");
+        });
+
+
+
+
+
+
+
+        $('#preloader').fadeOut(function(){
+            $('footer').css({"background":"white",
+                "color":"#333"})
+            $('footer').fadeIn();
+            $('.body').fadeIn();
+            $(window).trigger('resize');
+        })
+
+
+    });
+</script>
+
+</body>
+</html>

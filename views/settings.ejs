@@ -1,0 +1,270 @@
+<%- include('top') %>
+<style type="text/css">
+    ul.typeahead {
+        margin-left: 10%;
+    }
+    #itemsInputs .in-gr {
+        text-align: center;
+        margin-top: 10px;
+        width: 100%;
+    }
+    #itemsInputs .in-gr input {
+        display: inline-block;
+        margin-left: 10%;
+        width: 80%;
+
+        float: left;
+    }
+    #itemsInputs .in-gr .btn-del {
+        display: inline-block;
+        float: right;
+    }
+</style>
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <a href="/orders" class="btn btn-default">Назад</a>
+                <h3>Настройка компании</h3>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+
+
+
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div id="alrt-sent" class="alert alert-success alert-dismissible fade in" role="alert" style="display: none">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>Настройки сохранены!</strong>
+                </div>
+                <div class="x_content">
+
+
+                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#tab_content" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Данные о компании</a>
+                            </li>
+                            <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Смс-Оповещение</a>
+                            </li>
+                            <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Телефония</a>
+                            </li>
+                            <li role="presentation" class=""><a href="/perms">Права групп</a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content" aria-labelledby="home-tab">
+                                <form class="form-horizontal form-label-left input_mask" id="companyInfo">
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+
+                                        <input class="form-control" name="name" id="name" placeholder="Наименование" type="text" value="<%= company.name %>">
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                                        <input class="form-control" id="parent" name="address1"  placeholder="Адрес" type="text" value="<%= company.address1 %>">
+                                        <span class="fa fa-folder form-control-feedback right" aria-hidden="true"></span>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                                        <input name="address2" class="form-control" placeholder="Адрес (доп)" type="text" value="<%= company.address2 %>">
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                                        <input name="email" class="form-control" placeholder="Email"  type="text" value="<%= company.email %>">
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                                        <input name="phone" class="form-control" placeholder="Телефон" type="text" value="<%= company.phone %>">
+                                        <span class="fa fa-item form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Сохранить</button>
+
+                                </form>
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                <form class="form-horizontal form-label-left input_mask" id="smsInfo">
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <input class="form-control" id="parent" name="address1"  placeholder="API ключ" type="text">
+                                        <span class="fa fa-folder form-control-feedback right" aria-hidden="true"></span>
+                                    </div>
+
+
+                                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Сохранить</button>
+
+                                </form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                <form class="form-horizontal form-label-left input_mask" id="telInfo">
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                                        <input class="form-control" id="parent" name="address1"  placeholder="API ключ" type="text">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Сохранить</button>
+
+                                </form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+                                <form class="form-horizontal form-label-left input_mask" id="groupperms"  action="/perms" method="post">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Должность</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12" >
+                                            <select id="jobtitle" class="form-control" name="jobtitle" required>
+                                                <option value="" selected disabled>Выберите</option>
+
+                                                <option value="director">Руководитель</option>
+                                                <option value="maneger">Менеджер</option>
+                                                <option value="merch">Кладовщик</option>
+                                                <option value="carrier">Курьер</option>
+                                                <option value="addNew">Добавить нового</option>
+                                            </select>
+                                        </div>
+                                        <input type="hidden" id="isNew" name="isNew">
+                                        <div class="form-group" id="forNew" style="display: none">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Новый</label>
+
+                                            <div class="col-md-9 col-sm-9 col-xs-12" >
+                                                <input type="text" placeholder="Название на Русском" name="fullname" class="form-control">
+                                            </div>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Таг группы</label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12" >
+                                                <input type="text" placeholder="Короткое на Английском" name="name" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Привилегии</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input name="addUsers" type="checkbox" checked="true"> Добавлять пользователей
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input name="chUsers" type="checkbox"> Изменять/Удалять пользователя
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input name="addOrders" type="checkbox"> Добавлять заказы
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input name="chOrders" type="checkbox"> Изменять/Удалять заказы
+                                                </label>
+                                            </div><div class="checkbox">
+                                                <label>
+                                                    <input name="addShips" type="checkbox"> Добавлять доставки
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input name="chShips" type="checkbox"> Изменять/Удалять доставки
+                                                </label>
+                                            </div><div class="checkbox">
+                                                <label>
+                                                    <input name="addGoods" type="checkbox"> Добавлять товары
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input name="chGoods" type="checkbox"> Изменять/Удалять товары
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Сохранить</button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<footer>
+    <div class="pull-right">
+        NordIT . Техническая поддержка + 7 964 397 24 42
+    </div>
+    <div class="clearfix"></div>
+</footer>
+</div>
+</div>
+
+<script src="/vendors/jquery/dist/jquery.min.js"></script>
+<script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/vendors/fastclick/lib/fastclick.js"></script>
+<script src="/vendors/nprogress/nprogress.js"></script>
+<script src="build/js/custom.js"></script>
+
+
+<!--<script src="/vendors/pnotify/dist/pnotify.js"></script>-->
+<!--<script src="/vendors/pnotify/dist/pnotify.buttons.js"></script>-->
+<!--<script src="/vendors/pnotify/dist/pnotify.nonblock.js"></script>-->
+
+<!--<script type="text/javascript" src="js/bootstrap3-typeahead.min.js"></script>-->
+
+<script>
+    $(document).ready(function(){
+        $("#companyInfo").submit(function (e) {
+            e.preventDefault();
+            $.post('/settings', $(this).serialize() ).done(function () {
+                $('#alrt-sent').slideDown();
+            })
+        })
+
+        $('#preloader').fadeOut(function(){
+            $('footer').css({"background":"white",
+                "color":"#333"})
+            $('footer').fadeIn();
+            $('.body').fadeIn()
+            $(window).trigger('resize');
+        })
+        $("#jobtitle").change(function () {
+            if ($(this).val() == 'addNew') {
+                $("#forNew").slideDown();
+                $("#isNew").val(true)
+            } else {
+                $("#forNew").slideUp();
+                $("#isNew").val(false)
+            }
+        })
+    })
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Заказ № <%= order._id %></title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+
+    <!-- Custom styling plus plugins -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div role="main">
+            <div class="">
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Заказ № <%= order._id %></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+                                <section class="content invoice">
+                                    <!-- title row -->
+                                    <div class="row">
+                                        <div class="col-xs-12 invoice-header">
+                                            <h1>
+                                                <i class="fa fa-globe"></i> Odin-Holding.
+                                                <small class="pull-right">Дата: <%= order.created %></small>
+                                            </h1>
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
+                                    <!-- info row -->
+                                    <div class="row invoice-info">
+                                        <div class="col-sm-4 invoice-col">
+                                            От
+
+                                            <address>
+                                                <strong><%= company.name %></strong>
+                                                <br><%= company.address1 %>
+                                                <br><%= company.address2 %>
+                                                <br>Телефон: <%= company.phone %>
+                                                <br>Email: <%= company.email %>
+                                            </address>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-4 invoice-col">
+                                            Покупатель
+                                            <address>
+                                                <strong><%= order.name %></strong>
+                                                <br><% if (ship != null) { %><%= ship.address %><% }%>
+                                                <% if (order.phone) { %><strong>Телефон: </strong><%= order.phone %><br><% }%>
+                                                <% if (order.email) { %><strong>Еmail: </strong><%= order.email %><% }%>
+                                            </address>
+                                        </div>
+                                        <!-- /.col -->
+                                        <!--<div class="col-sm-4 invoice-col">-->
+                                            <!--<b>Invoice #007612</b>-->
+                                            <!--<br>-->
+                                            <!--<br>-->
+                                            <!--<b>Order ID:</b> 4F3S8J-->
+                                            <!--<br>-->
+                                            <!--<b>Payment Due:</b> 2/22/2014-->
+                                            <!--<br>-->
+                                            <!--<b>Account:</b> 968-34567-->
+                                        <!--</div>-->
+                                        <!-- /.col -->
+                                    </div>
+                                    <!-- /.row -->
+
+                                    <!-- Table row -->
+                                    <div class="row">
+                                        <div class="col-xs-12 table">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Количество</th>
+                                                    <th>Товар</th>
+                                                    <th>Код на складе #</th>
+                                                    <th>Стоимость</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Тест</td>
+                                                    <td>1950023423</td>
+                                                    <td>???</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
+                                    <!-- /.row -->
+
+                                    <div class="row">
+                                        <!-- accepted payments column -->
+                                        <div class="col-xs-6">
+                                            <p class="lead">Подписи сторон:</p>
+                                            <p>Покупатель:</p>
+                                            <hr>
+                                            <p>Продавец:</p>
+                                            <hr>
+                                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                                Спасибо за покупку!
+                                            </p>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-xs-6">
+                                            <p class="lead">Оплачено 2/22/2014</p>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th style="width:50%">Сумма без НДС:</th>
+                                                        <td><%= order.sum * 0.907 %> рублей</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Налог (9.3%)</th>
+                                                        <td><%= order.sum * 0.093 %> рублей</td>
+                                                    </tr>
+                                                    <% if (ship) { %>
+                                                    <tr>
+                                                        <th>Доставка:</th>
+                                                        <td>$5.80</td>
+                                                    </tr>
+                                                    <% }%>
+                                                    <tr>
+                                                        <th>Сумма:</th>
+                                                        <td><%= order.sum %> рублей</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
+                                    <!-- /.row -->
+
+                                    <!-- this row will not appear when printing -->
+                                    <div class="row no-print">
+                                        <div class="col-xs-12">
+                                            <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Печать</button>
+                                            <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Подтвердить платеж</button>
+                                            <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Создать PDF</button>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="../vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="../vendors/nprogress/nprogress.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="../build/js/custom.min.js"></script>
+</body>
+</html>

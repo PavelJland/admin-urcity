@@ -1,0 +1,170 @@
+<%- include('top') %>
+<style type="text/css">
+ul.typeahead {
+      margin-left: 10%;
+}
+#itemsInputs .in-gr {
+  text-align: center;
+  margin-top: 10px;
+  width: 100%;
+}
+  #itemsInputs .in-gr input {
+    display: inline-block;
+    margin-left: 10%;
+    width: 80%;
+
+    float: left;
+  }
+  #itemsInputs .in-gr .btn-del {
+    display: inline-block;
+    float: right;
+  }
+</style>
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+              <a href="/workers" class="btn btn-default">Назад</a>
+                <h3>Добавить сотрудника</h3>
+              </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+<div id="done-write" class="alert alert-success alert-dismissible fade in" role="alert" style="display: none;">
+</button>
+                    <strong>Сотрудник добавлен!</strong>
+                  </div>
+
+
+     <form class="form-horizontal form-label-left input_mask" id="addworkderform">
+
+                           <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Должность</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <select id="jobtitle" class="form-control" name="jobtitle">
+                            <option value="admin">Администратор</option>
+                            <option value="oper">Оператор</option>
+                            <option value="police">Коммисар</option>
+                            <option value="fire">Мафия</option>
+                            <option value="ambulance">Медик</option>
+                          </select>
+                        </div>
+                      </div>
+
+
+                      <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input class="form-control has-feedback-left" name="fname" id="inputSuccess2" placeholder="Имя" type="text" required>
+                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                      </div>
+
+                      <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input class="form-control" id="inputSuccess3" name="sname"  placeholder="Фамилия" type="text" required>
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                      </div>
+
+                      <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input name="email" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email" type="email" required>
+                        <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                      </div>
+
+
+                      <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input class="form-control" placeholder="Пароль" name="password" type="text" required>
+                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                      </div>
+
+                      <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input class="form-control" placeholder="Контактный телефон" name="phone" type="text" required>
+                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                      </div>
+
+                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        
+                         <input class="form-control" id="comment" placeholder="Комментарий" name="comment" type="text">
+                        <span class="fa fa-folder-open form-control-feedback right" aria-hidden="true"></span>
+                      </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                         <input class="form-control" id="address" placeholder="Адрес" name="address" type="text">
+                        <span class="fa fa-folder-open form-control-feedback right" aria-hidden="true"></span>
+                      </div>
+
+
+                       <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                         <input class="form-control" id="skype" placeholder="Skype" name="skype" type="text">
+                        <span class="fa fa-folder-open form-control-feedback right" aria-hidden="true"></span>
+                      </div>
+
+                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                         <input class="form-control" id="skype" placeholder="Viber" name="viber" type="text">
+                        <span class="fa fa-folder-open form-control-feedback right" aria-hidden="true"></span>
+                      </div>
+                          <button id="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Добавить</button>
+                      </form>
+
+
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <style type="text/css">
+          .addbtn {
+            font-size: 24px;
+          }
+          .m-10 {
+            margin-bottom: 10px;
+          }
+        </style>
+
+        <footer>
+          <div class="pull-right">
+            NordIT . Техническая поддержка + 7 964 397 24 42
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+      </div>
+    </div>
+
+    <script src="/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/vendors/fastclick/lib/fastclick.js"></script>
+    <script src="/vendors/nprogress/nprogress.js"></script>
+    <script src="/vendors/validator/validator.js"></script>
+
+    <script type="text/javascript" src="js/bootstrap3-typeahead.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function($) {
+
+      $("#submit").click(function(e) {
+        e.preventDefault();
+        $.post('/user', $("#addworkderform").serialize()).done(function(){
+          $("#done-write").show();
+        })
+      });
+
+
+      $('#preloader').fadeOut(function(){
+  $('footer').css({"background":"white",
+   "color":"#333"})
+  $('footer').fadeIn(); 
+  $('.body').fadeIn()
+  $(window).trigger('resize');
+})
+
+    });
+      
+    </script>
+  
+  </body>
+</html>

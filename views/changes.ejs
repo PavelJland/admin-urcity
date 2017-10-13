@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Заказы</title>
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link href="/build/css/custom.min.css" rel="stylesheet">
+  </head>
+<body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="/" class="site_title"><i class="fa fa-bank"></i> <span>Rahim's Business</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                <span>Здравствуйте,</span>
+                <h2><%= user.profile.fname %> <%= user.profile.sname %> </h2>
+              </div>
+            </div>
+                   <br />
+<%- include('sidebar-menu') %>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="/logout">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+
+           <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="images/img.jpg" alt=""><%= user.local.email %>
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="">Профиль</a></li>
+                    <li>
+                      <a href="/wizard">
+                        <span>Настройки</span>
+                      </a>
+                    </li>
+                    <li><a href="">Помощь</a></li>
+                    <li><a href="/logout"><i class="fa fa-sign-out pull-right"></i> Выход</a></li>
+                  </ul>
+                </li>
+
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Клиенты <small> заказы</small></h3>
+              </div>
+
+
+            </div>
+
+
+            <div>
+<a href="add" type="button" class="btn btn-round btn-success" style="width:100%; margin-bottom: 30px">Новый заказ</a>
+<div id="good" class="alert alert-success alert-dismissible fade in" role="alert" style="display: none">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>Изменения внесены!</strong> 
+                  </div></div>
+<div id="art-no-method" class="alert art-acti alert-warning alert-dismissible fade in" role="alert" style="display: none">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>Не выбрано действие!</strong> 
+                  </div></div>
+<style type="text/css">
+  .popsel {
+    display: none;
+  }
+</style>
+ 
+
+
+<div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+    <span></span> <b class="caret"></b>
+</div>
+
+
+<div id="bbaction" style="float: left; display: none;width: 100%; padding: 20px">
+<div class="row">
+
+<div class="col-md-9 col-sm-9 col-xs-9">
+<div class="form-group">
+  <div class="col-md-9 col-sm-9 col-xs-12">
+    <select id="sel-bulk-action" class="form-control" name="status">
+    <option disabled selected>Действие</option>
+      <option value="delete">Удалить</option>
+      <option disabled="true">Изменить статут</option>
+      <option disabled="true">Изменить управляющего</option>
+      <option disabled="true">Изменить источник</option>
+    </select>
+  </div>
+
+  <div class="col-md-3 col-sm-3 col-xs-3">
+<button id="lion" class="btn btn-warning" style="float: right">Подтвердить</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+            <div class="clearfix"></div>
+
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Работа на  <small>18.08.2017</small></h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Settings 1</a>
+                        </li>
+                        <li><a href="#">Settings 2</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <div class="dashboard-widget-content">
+
+                    <ul class="list-unstyled timeline widget">
+                      <li>
+                        <div class="block">
+                          <div class="block_content">
+                            <h2 class="title">
+                                              <a>Регистрация сотрудников от администратора</a>
+                                          </h2>
+                            <div class="byline">
+                              <span></a>
+                            </div>
+                            <p class="excerpt">Редактирование</a>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="block">
+                          <div class="block_content">
+                            <h2 class="title">
+                                              <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                          </h2>
+                            <div class="byline">
+                              <span>13 hours ago</span> by <a>Jane Smith</a>
+                            </div>
+                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="block">
+                          <div class="block_content">
+                            <h2 class="title">
+                                              <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                          </h2>
+                            <div class="byline">
+                              <span>13 hours ago</span> by <a>Jane Smith</a>
+                            </div>
+                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="block">
+                          <div class="block_content">
+                            <h2 class="title">
+                                              <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                          </h2>
+                            <div class="byline">
+                              <span>13 hours ago</span> by <a>Jane Smith</a>
+                            </div>
+                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+       
+        <footer>
+          <div class="pull-right">
+             Техническая поддержка <a href="tel:+79643972442">+7 964 397 24 42</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+  
+      </div>
+    </div>
+
+    <script src="/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/vendors/fastclick/lib/fastclick.js"></script>
+    <script src="/vendors/nprogress/nprogress.js"></script>
+    <script src="/vendors/iCheck/icheck.min.js"></script>
+    <script src="/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/build/js/custom.min.js"></script>
+
+
+    <script type="text/javascript" src="/vendors/moment/moment.js"></script>
+    <script type="text/javascript" src="../vendors/moment/locale/ru.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<style type="text/css">.ranges{border: 3px solid #424954; padding: 10px; } .dataTables_filter {
+width: auto !important;
+  }</style>
+
+
+
+    <script type="text/javascript">
+var allChecked;
+var method;
+
+var qwe = function() {
+  $('.totime').each(function() {
+    if ($(this)) {
+      $(this).text();
+    }
+  })
+}
+
+var countChecked = function() {
+allChecked = $("input:checked");
+if (allChecked.length > 0) {
+  $('#bbaction').show({});
+}
+};
+
+
+$(document).ready(function() {
+
+$('#sel-bulk-action').change(function(event) {
+ $('.art-acti').hide();
+ method = $('#sel-bulk-action').val();
+});
+  qwe();
+
+  // ACTION BUTTON
+  $("#lion").click(function(e) {
+    e.preventDefault();
+
+ 
+
+    if (!method) {
+      $('#art-no-method').slideDown();
+      return
+    }
+
+
+
+    if (allChecked.length <= 0) return
+    if (!$('#sel-bulk-action').val()) return
+
+
+    var data = [];
+
+    for(var i=0; i < allChecked.length; i++) {
+      if (allChecked[i].id != "check-all") {
+        data.push(allChecked[i].id);
+      }
+    }
+    
+
+    $.ajax({
+            url: 'update/orders?method=' + method,
+            type: 'post',
+            dataType: 'json',
+            data: {'ids': data },
+            statusCode: {
+                204: function(xhr) {
+                  $('#good').slideDown();
+                  location.reload();
+                }
+              }
+        });
+
+    })
+
+
+$('#check-all').click(function(event) {
+  if(this.checked) {
+      $(':checkbox').each(function() {
+          this.checked = true;
+          $('#bbaction').show()
+      });
+  }
+  else {
+    $(':checkbox').each(function() {
+          this.checked = false;
+          $('#bbaction').hide()
+      });
+  }
+});
+
+$('select[name="datatable-responsive_length"]').change(function() { 
+
+  console.log($(this).val());
+  qwe();
+
+
+})
+
+countChecked();
+ $( "input[type=checkbox]" ).on( "click", countChecked );
+ 
+
+$(function() {
+
+    var start = moment().subtract(29, 'days');
+    var end = moment()
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        console.log(start)
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+           'Сегодня': [moment(), moment()],
+           'Вчера': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Последние 7 Дней': [moment().subtract(6, 'days'), moment()],
+           'Последние 30 Дней': [moment().subtract(29, 'days'), moment()],
+           'Этот Месяц': [moment().startOf('month'), moment().endOf('month')],
+           'Прошлый Месяц': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+
+    $('.applyBtn').text("Применить");
+    $('.cancelBtn').text("Отменить");
+});
+
+
+
+
+
+});
+</script>
+  </body>
+</html>
